@@ -26,3 +26,17 @@ export function createElement(name, props = {}, ...children) {
 
   return element;
 }
+
+/**
+ * Проверка на раз / раза
+ * @param {Integer} number
+ * @returns {String}
+ */
+export function checkEndingForRAZ(number) {
+  if (([2, 3, 4].includes(number % 10)) &&
+       (`${number / 100}`.at(-2) !== '1')) {
+         return 'а';
+       } else {
+         return '';
+       }
+}

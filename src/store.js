@@ -49,6 +49,10 @@ class Store {
     });
   }
 
+  /**
+   * Возврат и увеличение счётчика элементов
+   * @returns {Integer}
+   */
   getCodeCount() {
     return this.codeCounter++;
   }
@@ -74,6 +78,10 @@ class Store {
       list: this.state.list.map(item => {
         if (item.code === code) {
           item.selected = !item.selected;
+
+          if (item.selected) {    // Снятие выделения не увеличивает счётчик
+            item.selectCount = item.selectCount ? item.selectCount + 1 : 1;
+          }
         } else if (item.selected) {
           item.selected = false;
         }
