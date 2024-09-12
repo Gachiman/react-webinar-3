@@ -1,5 +1,5 @@
 import React from 'react';
-import { createElement, checkEndingForRAZ } from './utils.js';
+import { createElement, pluralizeFor2 } from './utils.js';
 import './styles.css';
 
 /**
@@ -31,7 +31,7 @@ function App({ store }) {
 
                 {item.selectCount && (
                   <div className="Item-select-counter">
-                    &nbsp;| Выделяли {item.selectCount} раз{checkEndingForRAZ(item.selectCount)}
+                    &nbsp;| Выделяли {item.selectCount} раз{pluralizeFor2(item.selectCount, 'а', '')}
                   </div>
                 )}
                 

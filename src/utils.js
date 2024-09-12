@@ -28,15 +28,17 @@ export function createElement(name, props = {}, ...children) {
 }
 
 /**
- * Проверка на раз / раза
- * @param {Integer} number
+ * Вариант слова / окончания в зависимости от количества
+ * @param {Integer} number количество элементов
+ * @param {String} first первый вариант слова
+ * @param {String} second второй вариант слова
  * @returns {String}
  */
-export function checkEndingForRAZ(number) {
+export function pluralizeFor2(number, first, second) {
   if (([2, 3, 4].includes(number % 10)) &&
        (`${number / 100}`.at(-2) !== '1')) {
-         return 'а';
+         return first;
        } else {
-         return '';
+         return second;
        }
 }

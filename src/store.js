@@ -5,7 +5,8 @@ class Store {
   constructor(initState = {}) {
     this.state = initState;
     this.listeners = []; // Слушатели изменений состояния
-    this.codeCounter = initState.list.length + 1;
+    this.codeCounter = 0;
+    this.initStateCodes = new Set(initState.list.map(item => item.code));
   }
 
   /**
@@ -54,7 +55,10 @@ class Store {
    * @returns {Integer}
    */
   getCodeCount() {
-    return this.codeCounter++;
+    do {
+      this.codeCounter++;
+    } while (this.initStateCodes.has(this.codeCounter));
+    return this.codeCounter;
   }
 
   /**
