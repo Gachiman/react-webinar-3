@@ -1,8 +1,9 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import List from './components/list';
-import Controls from './components/controls';
+import CartIntro from './components/cart-intro';
 import Head from './components/head';
 import PageLayout from './components/page-layout';
+import CartModal from './components/cart-modal';
 
 /**
  * Приложение
@@ -11,35 +12,47 @@ import PageLayout from './components/page-layout';
  */
 function App({ store }) {
   const list = store.getState().list;
+  const cart = store.getCartState();
+  const totalCost = store.getTotalCost();
+  const totalUnicAmount = store.getTotalUnicAmount();
+
+  const [cartActive, setCartActive] = useState(false);
+  
+  const callbacksCartModal = {
+    showCart: () => setCartActive(true),
+    hideCart: () => setCartActive(false),
+  }
 
   const callbacks = {
+    onAddItem: useCallback(
+      code => {
+        store.addItem(code);
+      },
+      [store],
+    ),
+
     onDeleteItem: useCallback(
       code => {
         store.deleteItem(code);
       },
       [store],
     ),
-
-    onSelectItem: useCallback(
-      code => {
-        store.selectItem(code);
-      },
-      [store],
-    ),
-
-    onAddItem: useCallback(() => {
-      store.addItem();
-    }, [store]),
   };
 
   return (
     <PageLayout>
-      <Head title="Приложение на чистом JS" />
-      <Controls onAdd={callbacks.onAddItem} />
+      <Head title="Магазин" />
+      <CartIntro showCart={callbacksCartModal.showCart}
+                 totalCost={totalCost} totalUnicAmount={totalUnicAmount} />
       <List
         list={list}
-        onDeleteItem={callbacks.onDeleteItem}
-        onSelectItem={callbacks.onSelectItem}
+        buttonCallback={callbacks.onAddItem}
+        buttonTitle="Добавить"
+      />
+      
+      <CartModal active={cartActive} setActive={callbacksCartModal.hideCart}
+                 list={cart} buttonCallback={callbacks.onDeleteItem}
+                 totalCost={totalCost}
       />
     </PageLayout>
   );

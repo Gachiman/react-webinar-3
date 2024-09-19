@@ -5,8 +5,9 @@ import { generateCode } from './utils';
  */
 class Store {
   constructor(initState = {}) {
-    this.state = initState;
+    this.state = initState;  // Список товаров
     this.listeners = []; // Слушатели изменений состояния
+    this.cart = [];  // Корзина товаров
   }
 
   /**
@@ -23,7 +24,7 @@ class Store {
   }
 
   /**
-   * Выбор состояния
+   * Выбор состояния списка товаров
    * @returns {Object}
    */
   getState() {
@@ -31,23 +32,42 @@ class Store {
   }
 
   /**
+   * Получение состояния корзины товаров
+   * @returns {Array}
+   */
+  getCartState() {
+    return this.cart;
+  }
+
+  /**
    * Установка состояния
    * @param newState {Object}
    */
-  setState(newState) {
-    this.state = newState;
+  setCart(newCart) {
+    this.cart = newCart;
     // Вызываем всех слушателей
     for (const listener of this.listeners) listener();
   }
 
   /**
-   * Добавление новой записи
+   * Добавление товара в корзину
+   * @param code
    */
-  addItem() {
-    this.setState({
-      ...this.state,
-      list: [...this.state.list, { code: generateCode(), title: 'Новая запись' }],
-    });
+  addItem(code) {
+    // Проверка наличия товара в корзине
+    const checkInCart = this.cart.find(item => item.code === code);
+    if (checkInCart) {
+      this.setCart(this.cart.map(item => {
+        if (item.code === code) {
+          return {...item, amount: item.amount + 1};
+        } else {
+          return item;
+        }
+      }));
+    } else {  // В случае отсутствия, добавляем его туда из списка товаров
+      const getFromStore = this.state.list.find(item => item.code === code);
+      this.setCart([...this.cart, {...getFromStore, amount: 1}]);
+    }
   }
 
   /**
@@ -55,33 +75,25 @@ class Store {
    * @param code
    */
   deleteItem(code) {
-    this.setState({
-      ...this.state,
-      // Новый список, в котором не будет удаляемой записи
-      list: this.state.list.filter(item => item.code !== code),
-    });
+    this.setCart(this.cart.filter(item => item.code !== code));
   }
 
   /**
-   * Выделение записи по коду
-   * @param code
+   * Получение общей суммы товаров в корзине
+   * @returns {number}
    */
-  selectItem(code) {
-    this.setState({
-      ...this.state,
-      list: this.state.list.map(item => {
-        if (item.code === code) {
-          // Смена выделения и подсчёт
-          return {
-            ...item,
-            selected: !item.selected,
-            count: item.selected ? item.count : item.count + 1 || 1,
-          };
-        }
-        // Сброс выделения если выделена
-        return item.selected ? { ...item, selected: false } : item;
-      }),
-    });
+  getTotalCost() {
+    return this.cart.reduce((sum, item) => {
+      return sum + (item.amount * item.price)
+    }, 0);
+  }
+
+  /**
+   * Получение общего кол-ва уникальных товаров в корзине
+   * @returns {number}
+   */
+  getTotalUnicAmount() {
+    return this.cart.length;
   }
 }
 

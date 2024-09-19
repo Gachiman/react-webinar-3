@@ -1,0 +1,15 @@
+.CartIntro {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px;
+  border-bottom: 1px dashed #ccc;
+}
+
+.CartIntro-summary {
+  font-weight: bold;
+}
+
+.CartIntro-button {
+  width: 75px;
+  margin-left: 30px;
+}
