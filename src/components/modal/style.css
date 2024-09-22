@@ -26,24 +26,10 @@
   transition: 0.4s all;
   width: 90vw;
   max-width: 954px;
+  overflow-y: auto;
+  max-height: 80vh;
 }
 
 .CartModal-content.active {
   transform: scale(1);
-}
-
-.CartModal-head {
-  border-bottom: 1px dashed #ccc;
-  padding-bottom: 80px;
-}
-
-.CartModal-bottom {
-  display: flex;
-  justify-content: flex-end;
-  font-weight: bold;
-  padding: 20px 113px 90px;
-}
-
-.CartModal-bottom span {
-  padding-left: 45px;
 }

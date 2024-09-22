@@ -1,0 +1,15 @@
+.CartModal-head {
+  border-bottom: 1px dashed #ccc;
+  padding-bottom: 80px;
+}
+
+.CartModal-bottom {
+  display: flex;
+  justify-content: flex-end;
+  font-weight: bold;
+  padding: 20px 113px 90px;
+}
+
+.CartModal-bottom span {
+  padding-left: 45px;
+}

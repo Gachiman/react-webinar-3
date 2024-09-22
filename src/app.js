@@ -3,7 +3,10 @@ import List from './components/list';
 import CartIntro from './components/cart-intro';
 import Head from './components/head';
 import PageLayout from './components/page-layout';
-import CartModal from './components/cart-modal';
+import Modal from './components/modal';
+import Cart from './components/cart';
+import Item from './components/item';
+import ItemCart from './components/item-cart';
 
 /**
  * Приложение
@@ -47,13 +50,28 @@ function App({ store }) {
       <List
         list={list}
         buttonCallback={callbacks.onAddItem}
-        buttonTitle="Добавить"
-      />
+        listItem={Item}
+      >
+
+        {list.map(item => (
+          <div key={item.code} className="List-item">
+            <Item item={item} onAdd={callbacks.onAddItem} />
+          </div>
+        ))}
+      </List>
       
-      <CartModal active={cartActive} setActive={callbacksCartModal.hideCart}
-                 list={cart} buttonCallback={callbacks.onDeleteItem}
-                 totalCost={totalCost}
-      />
+      <Modal active={cartActive}>
+        <Cart setActive={callbacksCartModal.hideCart}
+              list={cart} buttonCallback={callbacks.onDeleteItem}
+              totalCost={totalCost} listItem={ItemCart}>
+
+          {cart.map(item => (
+            <div key={item.code} className="List-item">
+              <ItemCart item={item} onDelete={callbacks.onDeleteItem} />
+            </div>
+          ))}
+        </Cart>
+      </Modal>
     </PageLayout>
   );
 }

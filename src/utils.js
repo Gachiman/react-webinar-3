@@ -50,3 +50,18 @@ export const generateCode1 = (function (start = 0) {
 export function generateCode2() {
   return generateCode2.value ? ++generateCode2.value : (generateCode2.value = 1);
 }
+
+/**
+ * @param value {number} Передаваемая денежная сумма
+ * @param currency {string} Какую валюту хотим отобразить
+ * @returns {string} Возвращаем отформатированную денежную сумму
+ */
+export function formatMoney(value, currency) {
+  const lol = String(value);
+  let answer = '';
+  for (let i = -1; i > -lol.length - 1; i--) {
+    answer += lol.at(i);
+    if (i % 3 === 0) answer += ' ';
+  }
+  return `${answer.split('').reverse().join('')} ${currency}`;
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { plural } from '../../utils';
+import { plural, formatMoney } from '../../utils';
 import './style.css';
 
 function CartIntro({ showCart, totalCost=0, totalUnicAmount=0}) {
@@ -13,7 +13,7 @@ function CartIntro({ showCart, totalCost=0, totalUnicAmount=0}) {
             one: 'товар',
             few: 'товара',
             many: 'товаров',
-           })} / ${totalCost} ₽` : 'пусто'}
+           })} / ${formatMoney(totalCost, '₽')}` : 'пусто'}
         </span>
       </div>
       <button className="CartIntro-button" onClick={() => showCart()}>Перейти</button>

@@ -1,28 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Item from '../item';
+//import Item from '../item';
 import './style.css';
 
-function List({ list, buttonCallback, buttonTitle }) {
+function List({ children }) {
   return (
     <div className="List">
-      {list.map(item => (
-        <div key={item.code} className="List-item">
-          <Item item={item} buttonCallback={buttonCallback} buttonTitle={buttonTitle} />
-        </div>
-      ))}
+      {children}
     </div>
   );
 }
 
 List.propTypes = {
-  list: PropTypes.arrayOf(
-    PropTypes.shape({
-      code: PropTypes.number,
-    }),
-  ).isRequired,
-  buttonCallback: PropTypes.func.isRequired,
-  buttonTitle: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default React.memo(List);
