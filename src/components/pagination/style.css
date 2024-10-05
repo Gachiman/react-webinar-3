@@ -1,0 +1,28 @@
+.pagination-container {
+  display: flex;
+  justify-content: end;
+  margin-top: 22px;
+  margin-right: 21px;
+  list-style-type: none;
+  
+}
+
+.pagination-item {
+  min-width: 20px;
+  height: 20px;
+  text-align: center;
+}
+
+.available {
+  cursor: pointer;
+}
+
+.available:hover{
+  background-color: rgba(0, 0, 0, 0.14);
+}
+
+.selected {
+  background: #0087e9;
+  color: white;
+}
+
